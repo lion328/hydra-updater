@@ -1,0 +1,5 @@
+.idea/
+.gradle/
+build/
+src/main/resources/com/lion328/hydra/updater/resources/favicon.png
+favicon.ico
