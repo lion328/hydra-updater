@@ -4,7 +4,6 @@ import com.lion328.xenonlauncher.util.OS;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -74,10 +73,10 @@ public class Settings
 
             try
             {
-                remoteVersionUrl = new URL(replaceParameters(properties.getProperty("remoteVersionUrl")));
-                remoteLauncherUrl = new URL(replaceParameters(properties.getProperty("remoteLauncherUrl")));
+                remoteVersionUrl = Util.handleRedirectedURL(new URL(replaceParameters(properties.getProperty("remoteVersionUrl"))));
+                remoteLauncherUrl = Util.handleRedirectedURL(new URL(replaceParameters(properties.getProperty("remoteLauncherUrl"))));
             }
-            catch (MalformedURLException e)
+            catch (IOException e)
             {
                 e.printStackTrace();
 

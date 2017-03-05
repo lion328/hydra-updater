@@ -56,6 +56,37 @@ public class Util
         return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
 
+    public static URL handleRedirectedURL(URL url) throws IOException
+    {
+        return handleRedirectedURL(url, 5);
+    }
+
+    public static URL handleRedirectedURL(URL url, int max) throws IOException
+    {
+        return handleRedirectedURL(url, max, 0);
+    }
+
+    public static URL handleRedirectedURL(URL url, int max, int count) throws IOException
+    {
+        if (count > max)
+        {
+            throw new IOException("Too many URL redirections");
+        }
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        int status = connection.getResponseCode();
+
+        switch (status)
+        {
+            case HttpURLConnection.HTTP_MOVED_PERM:
+            case HttpURLConnection.HTTP_MOVED_TEMP:
+                return handleRedirectedURL(new URL(connection.getHeaderField("Location")), max, count + 1);
+        }
+
+        return url;
+    }
+
     public static ProcessBuilder createJarProcessBuilderIPv4(File jarFile)
     {
         return createJarProcessBuilder(jarFile, Collections.singletonList("-Djava.net.preferIPv4Stack=true"), null);
