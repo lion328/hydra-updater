@@ -42,7 +42,7 @@ public class Main
 
         try
         {
-            remoteVersion = Util.httpGET(settings.getRemoteVersionUrl());
+            remoteVersion = Util.httpGET(settings.getRemoteVersionUrl()).trim();
         }
         catch (IOException e)
         {
